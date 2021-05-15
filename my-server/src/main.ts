@@ -18,8 +18,9 @@ async function bootstrap() {
 
   // Adding some logger middleware as functionnal
   app.use(logger);
+  app.enableCors();
   
   //Launch server
-  await app.listen(3000);
+  await app.listen(3001);
 }
 bootstrap();

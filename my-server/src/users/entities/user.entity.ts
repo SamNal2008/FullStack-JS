@@ -3,6 +3,7 @@ import { CreateUserDto } from '../dto/create-user.dto';
 
 @Entity()
 export class User {
+
   @PrimaryGeneratedColumn() private _id: number;
 
   @Column() private _login: string;

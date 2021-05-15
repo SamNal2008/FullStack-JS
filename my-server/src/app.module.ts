@@ -8,8 +8,8 @@ import { UsersModule } from './users/users.module';
 import { CoursesModule } from './courses/courses.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { getConnectionOptions } from 'typeorm';
-import { CriConnectionService } from './cri-connection/cri-connection.service';
 import { AuthModule } from './auth/auth.module';
+import { CriConnectionModule } from './cri-connection/cri-connection.module';
 
 
 
@@ -19,9 +19,9 @@ import { AuthModule } from './auth/auth.module';
       Object.assign(await getConnectionOptions(), {
         autoLoadEntities: true,
       }),
-  }), AuthModule],
+  }), AuthModule, CriConnectionModule],
   controllers: [AppController],
-  providers: [AppService, CriConnectionService],
+  providers: [AppService],
 })
 
 export class AppModule implements NestModule {

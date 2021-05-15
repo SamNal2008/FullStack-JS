@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
+import { InvalidClassException } from "@nestjs/core/errors/exceptions/invalid-class.exception";
 
 @Injectable()
 export class UsersService {
@@ -15,7 +16,22 @@ export class UsersService {
 
   create(createUserDto: CreateUserDto): User {
     let newUser = User.createUserFromDto(createUserDto);
-    return this.userRepository.create(newUser);
+    console.log(newUser);
+    let newUserEntity = this.userRepository.create(newUser);
+    this.userRepository.save(newUserEntity).then(user => {
+      if (user) {
+        return user;
+      }
+      else {
+        throw new HttpException({
+          status: 401,
+          message: "Invalid parameter"
+        }, HttpStatus.BAD_REQUEST);
+      }
+    }).catch(
+        
+    );
+    return newUserEntity;
   }
 
   findAll(): Promise<User[]> {

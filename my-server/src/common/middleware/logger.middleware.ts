@@ -2,7 +2,8 @@ import { Injectable, NestMiddleware } from '@nestjs/common'
 import { Request, Response, NextFunction } from "express";
 
 export const logger = (req: Request, res: Response, next: NextFunction) => {
-    console.log('Some log functionnal ...');
+    console.log(`New request on : ${req.originalUrl}`);
+    console.log(`Returned : ${res.statusCode}`)
     next();
 }
 
