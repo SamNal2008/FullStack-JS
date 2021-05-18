@@ -3,8 +3,6 @@ import './my-home-page.css'
 
 function HomePage() {
 
-    
-
     return (<div className={"MyHomePage"}>
         Hello there
         <Link to={'/auth/login'} className={'btn btn-primary'}>Login</Link>
