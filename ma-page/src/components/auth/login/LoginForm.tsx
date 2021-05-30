@@ -9,27 +9,11 @@ function LoginForm() {
     const [password, setPassword] = useState('');
     let history = useHistory();
 
-    const verifyIdentity = async () => {
-        let userVerified = false;
-        await Axios.post(`${process.env.REACT_APP_BACKEND_URL}/auth/login`, {"name": name, "password": password})
-            .then(res => {
-                console.log(res);
-                console.log(res.data);
-                if (res.status === 201) {
-                    userVerified = true;
-                }
-                else {
-                    userVerified = false;
-                }
-            });
-        return userVerified;
-    }
-
     const clickSubmit = (event: any) => {
         event.preventDefault();
         Axios.post(`${process.env.REACT_APP_BACKEND_URL}/auth/login`, {"name": name, "password": password}).then(res => {
-            console.log(res.data);
             localStorage.setItem('accessToken', res.data.accessToken);
+            console.log(res.data);
             history.push('/home');
         }).catch(err => {
             console.error(err);
@@ -38,7 +22,7 @@ function LoginForm() {
     }
 
     return (<div className={"LoginForm"}>
-        <h1>Connection page</h1>
+        <h1>Login form</h1>
         <label>
             Login
         </label>

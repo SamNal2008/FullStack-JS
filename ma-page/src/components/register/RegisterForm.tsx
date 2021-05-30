@@ -1,6 +1,7 @@
 import './RegisterForm.css';
 import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useHistory } from 'react-router-dom';
 import Axios from 'axios';
 
 
@@ -11,12 +12,14 @@ interface IFormInputs {
   }
 
 function RegisterForm() {
+    const history = useHistory();
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInputs>();
     const onSubmit = (data: any) => {
         console.log(data);
-        Axios.post(`${process.env.REACT_APP_BACKEND_URL}/users`, data).then((res) => {
+        Axios.post(`${process.env.REACT_APP_BACKEND_URL}/auth/signup`, data).then((res) => {
             console.log(res);
-            alert('Welcome');
+            localStorage.setItem('accessToken', res.data.access_token);
+            history.push('/');
         }).catch((err) => {
             console.error(err);
             alert('Error');

@@ -1,12 +1,10 @@
 import LoginForm from "../../components/auth/login/LoginForm";
+import './LoginPage.css';
 
 function LoginPage() {
-    return (<div>
+    return (<div className="LoginPage">
         <h1>Login Page</h1>
-            <div>
-                <h2>Login form</h2>
-                <LoginForm></LoginForm>
-            </div>
+                <LoginForm/>
         </div>);
 }
 

@@ -1,27 +1,12 @@
 import './HomePage.css';
-import { useHistory } from 'react-router-dom'; 
+import KnownUser from '../../components/home/KnownUser.component';
+import UnknownUser from '../../components/home/UnknowUser.component';
 
 function HomePage() {
-    const history = useHistory();
     if (localStorage.getItem('accessToken')) {
-        return (<div>
-                <h1>Welcome you</h1>
-                <button onClick={() => {
-                    localStorage.removeItem('accessToken');
-                    history.push('/');
-                }}>Logout</button>
-            </div>)
+        return (<KnownUser/>);
     }
-    return (<div className="HomePage">
-        <h1>Home Page</h1>
-        <button onClick={() => {
-            history.push('/register');
-        }}>Register</button>
-        <br/>
-        <button onClick={() => {
-            history.push('/login');
-        }}>Login</button>
-    </div>)
+    return (<UnknownUser/>)
 }
 
 export default HomePage;
