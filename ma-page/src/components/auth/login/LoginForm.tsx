@@ -1,21 +1,21 @@
-import './my-login-page.css'
+import './LoginForm.css'
 import React, {useState} from "react";
 import { Redirect, useHistory } from 'react-router-dom';
 import Axios from 'axios';
 
-function MyLoginPage() {
+function LoginForm() {
 
-    const [login, setLogin] = useState('');
+    const [name, setLogin] = useState('');
     const [password, setPassword] = useState('');
     let history = useHistory();
 
     const verifyIdentity = async () => {
         let userVerified = false;
-        await Axios.get('http://localhost:8000/auth/login')
+        await Axios.post(`${process.env.REACT_APP_BACKEND_URL}/auth/login`, {"name": name, "password": password})
             .then(res => {
                 console.log(res);
                 console.log(res.data);
-                if (res.status === 200) {
+                if (res.status === 201) {
                     userVerified = true;
                 }
                 else {
@@ -27,16 +27,17 @@ function MyLoginPage() {
 
     const clickSubmit = (event: any) => {
         event.preventDefault();
-        let isVerified = verifyIdentity();
-        if (isVerified) {
+        Axios.post(`${process.env.REACT_APP_BACKEND_URL}/auth/login`, {"name": name, "password": password}).then(res => {
+            console.log(res.data);
+            localStorage.setItem('accessToken', res.data.accessToken);
             history.push('/home');
-        }
-        else {
-            alert('Invalid credentials !');
-        }
+        }).catch(err => {
+            console.error(err);
+            alert('Invalid creds');
+        })
     }
 
-    return (<div className={"myLoginPage"}>
+    return (<div className={"LoginForm"}>
         <h1>Connection page</h1>
         <label>
             Login
@@ -52,4 +53,4 @@ function MyLoginPage() {
     </div>);
 }
 
-export default MyLoginPage;
+export default LoginForm;
